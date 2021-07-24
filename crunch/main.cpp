@@ -127,7 +127,7 @@ static string GetFileName(const string& path)
     return name;
 }
 
-static void LoadBitmap(const string& prefix, const string& path)
+static void LoadOneBitmap(const string& prefix, const string& path)
 {
     if (optVerbose)
         cout << '\t' << PathToStr(path) << endl;
@@ -154,7 +154,7 @@ static void LoadBitmaps(const string& root, const string& prefix)
                 LoadBitmaps(PathToStr(file.path), prefix + PathToStr(file.name) + "/");
         }
         else if (PathToStr(file.extension) == "png")
-            LoadBitmap(prefix, file.path);
+            LoadOneBitmap(prefix, PathToStr(file.path));
         
         tinydir_next(&dir);
     }
@@ -340,7 +340,7 @@ int main(int argc, const char* argv[])
     for (size_t i = 0; i < inputs.size(); ++i)
     {
         if (inputs[i].rfind('.') != string::npos)
-            LoadBitmap("", inputs[i]);
+            LoadOneBitmap("", inputs[i]);
         else
             LoadBitmaps(inputs[i], "");
     }
